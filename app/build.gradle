@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "fr.gaulupeau.apps.InThePoche"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 211
+        versionName "2.2.1"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ eventBusIndex : 'fr.gaulupeau.apps.Poche.EventBusIndex' ]
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        lintConfig file("lint.xml")
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+        }
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+                srcDir 'src-gen'
+            }
+        }
+    }
+}
+
+greendao {
+    schemaVersion 101
+    daoPackage 'fr.gaulupeau.apps.Poche.data.dao'
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'org.greenrobot:greendao:3.2.2'
+    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.13.1'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.13.1'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    implementation 'com.mikepenz:aboutlibraries:6.0.2'
+    implementation 'com.github.di72nn.wallabag-api-wrapper:api-wrapper:3c987b1'
+    implementation 'org.slf4j:slf4j-android:1.7.25'
+}
